@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { HomeContainer, HeaderContainer, Icon, StyledTitle, StyledText, StyledInput, WalletButton, SwapButton, MintButton } from "./HomeElements";
+import iconImage from "../assets/Mint_icon.png"
+
 
 const Home = (props) => {
 
@@ -6,6 +9,7 @@ const Home = (props) => {
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
   const [url, setAddress] = useState("");
+  const [tokenId, setTokenId] = useState("");
  
   useEffect(async () => { //TODO: implement
     
@@ -14,6 +18,10 @@ const Home = (props) => {
   const connectWalletPressed = async () => { //TODO: implement
    
   };
+
+  const getMetadataPressed = async () => { //TODO: implement
+
+  }
 
   const onSwapPressed = async () => { //TODO: implement
     
@@ -24,42 +32,51 @@ const Home = (props) => {
   };
 
   return (
-    <div className="Home">
-      <button id="walletButton" onClick={connectWalletPressed}>
+    <HomeContainer id="homeContainer">
+        <WalletButton id="walletButton" onClick={connectWalletPressed}>
         {walletAddress.length > 0 ? (
-          "Connected: " +
-          String(walletAddress).substring(0, 6) +
-          "..." +
-          String(walletAddress).substring(38)
+            "Connected: " +
+            String(walletAddress).substring(0, 6) +
+            "..." +
+            String(walletAddress).substring(38)
         ) : (
-          <span>Connect Wallet</span>
+            <span>Connect Wallet</span>
         )}
-      </button>
+        </WalletButton>
 
-      <br></br>
-      <h1 id="title">Minimal Mint</h1>
+        <HeaderContainer>
+            <Icon src={iconImage}/>
+            <StyledTitle id="title">Minimal Mint</StyledTitle>
+        </HeaderContainer>
       
-      <form>
-        <h2>Address of asset: </h2>
-        <input
-          type="text"
-          placeholder="e.g. >"
-          onChange={(event) => setAddress(event.target.value)}
+        <form>
+        <StyledText>Address of asset: </StyledText>
+        <StyledInput
+            type="text"
+            placeholder="e.g. "
+            onChange={(event) => setAddress(event.target.value)}
         />
-      </form>
 
-      <button id="swapButton" onClick={onSwapPressed}>
-          Swap Chain
-      </button>
+        <StyledText>Token Id: </StyledText>
+        <StyledInput
+            type="text"
+            placeholder="e.g. "
+            onChange={(event) => setTokenId(event.target.value)}
+        />
+        </form>
 
-      <button id="mintButton" onClick={onMintPressed}>
+        <SwapButton id="swapButton" onClick={onSwapPressed}>
+            Swap Chain
+        </SwapButton>
+
+        <MintButton id="mintButton" onClick={onMintPressed}>
         Mint NFT
-      </button>
+        </MintButton>
 
-      <p id="status">
+        <p id="status">
         {status}
-      </p>
-    </div>
+        </p>
+    </HomeContainer>
   );
 };
 
