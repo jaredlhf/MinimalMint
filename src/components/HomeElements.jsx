@@ -62,6 +62,9 @@ export const WalletButton = styled(StyledButton)`
     width: 150px;
     margin-left: auto;
 `
+export const MetadataButton = styled(StyledButton)`
+    
+`
 
 export const SwapButton = styled(StyledButton)`
     

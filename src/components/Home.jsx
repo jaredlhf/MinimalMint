@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { HomeContainer, HeaderContainer, Icon, StyledTitle, StyledText, StyledInput, WalletButton, SwapButton, MintButton } from "./HomeElements";
+import { HomeContainer, HeaderContainer, Icon, StyledTitle, StyledText, StyledInput, WalletButton, SwapButton, MintButton , MetadataButton } from "./HomeElements";
 import iconImage from "../assets/Mint_icon.png"
+import abi from "../assets/abi.json"
+import { ethers } from "ethers"
+const provider = new ethers.providers.Web3Provider(window.ethereum)
 
 
 const Home = (props) => {
-
+  
+  let metadata;
   //State variables
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
@@ -15,12 +19,17 @@ const Home = (props) => {
     
   }, []);
 
-  const connectWalletPressed = async () => { //TODO: implement
-   
+  const connectWalletPressed = async () => { 
+    await provider.send("eth_requestAccounts", []);
+    let signer = provider.getSigner();
+    const addr = await signer.getAddress();
+    console.log("Account:", addr);
+    setWallet(addr);
   };
 
-  const getMetadataPressed = async () => { //TODO: implement
-
+  const getMetadataPressed = async (url, tokenId) => { 
+    const tokenContract = new ethers.Contract(url, abi, provider);
+    metadata = await tokenContract.tokenURI(tokenId);
   }
 
   const onSwapPressed = async () => { //TODO: implement
@@ -65,7 +74,11 @@ const Home = (props) => {
         />
         </form>
 
-        <SwapButton id="swapButton" onClick={onSwapPressed}>
+        <MetadataButton id="metaButton" onClick={(e) =>{getMetadataPressed(url, tokenId)}}>
+            Get Metadata
+        </MetadataButton>
+
+        <SwapButton id="swapButton" onClick={onSwapPressed()}>
             Swap Chain
         </SwapButton>
 
