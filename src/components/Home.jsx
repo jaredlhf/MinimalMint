@@ -44,7 +44,10 @@ const Home = (props) => {
   };
 
   const onMintPressed = async () => { // mints new NFT
-    const registryAddress = '0x02485099ff1011efaec0bf2716f1c910562ACcCA';
+    const registryAddress = '0x81eC14342AF0A3F881a094Ae0A5133A33692619c';
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    await provider.send("eth_requestAccounts", []);
+    signer = provider.getSigner();
     const newContract = new ethers.Contract(registryAddress, regAbi, signer);
 
     await newContract.mintInReg(_name, _symbol, metadata);
@@ -78,14 +81,14 @@ const Home = (props) => {
         <StyledText>Address of asset: </StyledText>
         <StyledInput
             type="text"
-            placeholder="e.g. "
+            placeholder="e.g. 0xE876D9Be49051564a55533f33c2ae67aACAfeA4A"
             onChange={(event) => setAddress(event.target.value)}
         />
 
         <StyledText>Token Id: </StyledText>
         <StyledInput
             type="text"
-            placeholder="e.g. "
+            placeholder="e.g. 0"
             onChange={(event) => setTokenId(event.target.value)}
         />
         </form>
