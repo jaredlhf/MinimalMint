@@ -22,4 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-keys.json
+/nft-gas-estimator/keys.json
+/nft-gas-estimator/node_modules
